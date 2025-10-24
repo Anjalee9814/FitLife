@@ -1,0 +1,47 @@
+name: Java CI - compile
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Compile on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Compile (Linux/macOS)
+        if: runner.os != 'Windows'
+        run: |
+          mkdir -p build/classes
+          # collect sources and compile (include bundled sqlite-jdbc jar)
+          find src -name "*.java" > sources.txt
+          javac -d build/classes -cp "lib/sqlite-jdbc-3.43.0.0.jar:." @sources.txt
+
+      - name: Compile (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path build\classes | Out-Null
+          $sources = Get-ChildItem -Recurse -Filter *.java | ForEach-Object { $_.FullName }
+          if ($sources -eq $null) { Write-Error "No Java sources found"; exit 1 }
+          javac -d build\classes -cp "lib\sqlite-jdbc-3.43.0.0.jar;." $sources
+
+      - name: List compiled classes
+        run: |
+          echo "Compiled classes:"
+          ls -R build || true
