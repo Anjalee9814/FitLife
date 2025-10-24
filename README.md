@@ -1,6 +1,20 @@
-## FitLife Gym Management System
+````markdown
+# FitLife Gym Management System
 
-A Java Swing desktop application for managing a gym's operations (staff, programs, member bookings) using an embedded SQLite database.
+Project description
+
+FitLife is a lightweight desktop Gym Management System built with Java Swing and an embedded SQLite database. It helps small gyms and fitness studios manage staff, create and maintain programs, and handle member bookings and registrations. The user interface is intentionally simple and desktop-first so it can be run locally without a server.
+
+Primary goals:
+
+- Provide an easy-to-use admin interface for staff and program management.
+- Let members view programs and manage bookings.
+- Keep the system self-contained (single-file SQLite DB) so it can run offline.
+
+Intended audience:
+
+- Small gym owners or managers who need an offline desktop tool.
+- Students and developers learning Java Swing, desktop app packaging, and SQLite integration.
 
 ## Quick overview
 
@@ -83,3 +97,4 @@ This repository is not licensed yet. See `LICENSE` if present.
 ## Contributing
 
 If you'd like to contribute, please open an issue or a pull request. See `CONTRIBUTING.md` for guidelines when available.
+````
