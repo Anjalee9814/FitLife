@@ -1,72 +1,66 @@
-# FitLife Gym Management System
+## FitLife Gym Management System
 
-A Java Swing application for managing a gym's operations including staff, programs, and member bookings.
+A Java Swing desktop application for managing a gym's operations (staff, programs, member bookings) using an embedded SQLite database.
+
+## Quick overview
+
+- Language: Java (Swing)
+- Database: SQLite (local DB file `GymDB.db` included)
+- Build: Plain Java source (no Maven/Gradle). Project includes `compile.bat` and `run.bat` for Windows.
 
 ## Prerequisites
 
-1. Java JDK 17 or higher (OpenJDK recommended)
-2. Apache Maven
-3. SQLite (included via Maven dependency)
+1. Java JDK 17 or higher (OpenJDK or Oracle JDK)
+2. (Optional) An IDE like IntelliJ IDEA or Eclipse
 
-## Setup Instructions
+## Build & run (Windows)
 
-1. Install Java:
-   - Download and install OpenJDK from [Adoptium](https://adoptium.net/)
-   - Add Java to your system PATH
+The repository includes helper scripts for Windows:
 
-2. Install Maven:
-   - Download Apache Maven from [Maven website](https://maven.apache.org/download.cgi)
-   - Extract the archive to a directory of your choice
-   - Add Maven's bin directory to your system PATH
-   - Verify installation with `mvn -v`
+1. Open PowerShell and change to the project directory:
 
-3. Build the project:
-   ```bash
-   mvn clean package
-   ```
+```powershell
+cd "C:\Users\Anjalee Himalki\Desktop\Fitlife"
+```
 
-4. Run the application:
-   ```bash
-   java -cp target/fitlife-gym-1.0-SNAPSHOT.jar com.fitlife.ui.LoginForm
-   ```
+2. To compile (uses the bundled SQLite JDBC JAR in `lib`):
 
-## Default Login Credentials
+```powershell
+# compile with provided script
+.\compile.bat
+```
 
-### Admin Account
-- Username: admin
-- Password: admin123
+3. To run the application:
 
-### Sample Member Accounts
-- Username: amal, Password: amal123
-- Username: nimal, Password: nimal123
-- Username: bimal, Password: bimal123
+```powershell
+# run with provided script
+.\run.bat
+```
 
-## Features
+If you prefer to compile manually, here's an example (Windows):
 
-1. **User Authentication**
-   - Login with admin/member accounts
-   - New member registration
+```powershell
+# create build output dir
+mkdir -Force build\classes
+# compile all Java sources and include sqlite-jdbc on the classpath
+javac -d build\classes -cp "lib\sqlite-jdbc-3.43.0.0.jar" @(Get-ChildItem -Recurse -Filter *.java).FullName
+# run the LoginForm
+java -cp "build\classes;lib\sqlite-jdbc-3.43.0.0.jar" com.fitlife.ui.LoginForm
+```
 
-2. **Admin Features**
-   - Manage staff members (add, update, delete)
-   - Manage gym programs (add, edit, delete)
+On macOS/Linux the equivalent commands use `:` for classpath separators and `sh` scripts if available.
 
-3. **Member Features**
-   - View available programs
-   - Manage bookings (create, edit, cancel)
+## Notes about the database
 
-4. **Database**
-   - SQLite database for persistent storage
-   - Automatic database creation and table setup
+- The project includes `GymDB.db` in the repository for convenience. The app will use this SQLite file in the project root.
+- If you want a fresh database, remove or rename `GymDB.db` and the application will recreate tables as needed.
 
-## Technical Details
+## Default credentials (for demo)
 
-- Built with Java Swing for GUI
-- Uses SQLite for database management
-- Follows MVC pattern for code organization
-- Implements input validation and error handling
+- Admin: `admin` / `admin123`
+- Sample members: `amal` / `amal123`, `nimal` / `nimal123`, `bimal` / `bimal123`
 
-## Project Structure
+## Project structure
 
 ```
 src/main/java/com/fitlife/
@@ -81,3 +75,11 @@ src/main/java/com/fitlife/
     ├── ManageBookingsForm.java
     └── ViewProgramsForm.java
 ```
+
+## License
+
+This repository is not licensed yet. See `LICENSE` if present.
+
+## Contributing
+
+If you'd like to contribute, please open an issue or a pull request. See `CONTRIBUTING.md` for guidelines when available.
